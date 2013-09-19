@@ -1,5 +1,5 @@
 require 'csv'
-require './lib/attendee'
+require './attendee'
 require 'pry'
 
 class EventReporter
@@ -11,11 +11,11 @@ class EventReporter
   end
 
   def run
-    puts "Welcome to EventReporter"
+    puts "Hey bro!  Welcome to EventReporter!!"
 
     command = ""
     while command != "quit"
-      printf "Enter your command:"
+      printf "Kindly enter your command:"
       user_input = gets.chomp
       command = user_input.split(" ")[0]
       response = process_input(user_input)
@@ -24,20 +24,40 @@ class EventReporter
   end
 
   def process_input(user_input)
-    user_input = user_input.downcase
-    command = user_input.split(" ")[0]
-    directive = user_input.split(" ")[1..-1]
+    @user_input = user_input.downcase
+    command = @user_input.split(" ")[0]
+    directive = @user_input.split(" ")[1..-1]
+    help_input = @user_input.split(" ")[1]
     case command
-      when "quit" then "Goodbye!"
-      when "help" then help_output
+      when "quit" then "You are the weakest link. Goodbye!"
+      when "help" then help_output(help_input)
       when "load" then load_csv_data
       when "queue" then queue_parser(directive)
       when "find" then find_parser(directive)
-      end
+      when "brownchickenbrowncow"
+        puts "Get on it! Get on it!"
+      else "Sorry, bro. Available commands are: load, queue_clear, queue_count, queue_save_to, find..., help, and quit."
+    end
   end
 
-  def help_output
-    "Available commands are: help, quit, load, queue, find."
+  def help_output(help_input)
+    case help_input
+    when "load" then puts "Erases loaded data and parses the specified file; If no filename is given default to /'event_attendees.csv'."
+    when "queue_count"
+       puts "Gives a number of how many records are in the current queue." 
+    when "queue_clear" 
+       puts "Empties the queue." 
+    when "queue_print"
+       puts "Prints out a tab-delimited data table (we never said it would be pretty...)" 
+    when "queue_print_by"
+       puts "Prints a data table that is sorted by the specified <attribute> like zipcode."
+    when "queue_save_to"
+       puts "Exports the current queue to the specified filename as a CSV." 
+    when "find"
+       puts "Find will match <attribute> and <criteria>."
+    else 
+       puts "Help: Provides a listing of the available individual commands (queue_count, queue_clear, queue_print, queue_print_by, queue_save_to and find)."
+    end
   end
 
   def find_parser(directive)
@@ -53,6 +73,7 @@ class EventReporter
   end
 
   def find_it(attribute,criteria)
+    puts "SeArChIng...FiNdInG...FoUnD"   
     criteria = criteria.chomp(" ")
     @attendees.find_all {|attendee| attendee.send(attribute) == criteria}
   end
@@ -84,16 +105,11 @@ class EventReporter
   end
 
   def queue_save(directive)
-    # binding.pry
     save_filename = directive[1..-1].join("")
-    # binding.pry
-    #save_filename ||= "output_from_event_reporter.csv"
-    #save_file_path = "#{save_filename}"
     save_file = File.open(save_filename, "w")
-    # binding.pry
-
     attendee_array = @queue.collect do |attendee|
        [attendee.email, attendee.first_name, attendee.last_name, attendee.phone_number, attendee.zip_code, attendee.city, attendee.state, attendee.address]
+    puts "Get it...........Got It.......Goooood"
     end
 
     attendee_array.each_with_index do |a_csv, i|
@@ -107,7 +123,6 @@ class EventReporter
     end
     save_file.close
     return save_file
-
   end
 
   def sort_and_print_queue(attribute)
@@ -132,6 +147,7 @@ class EventReporter
   end  
 
   def count_queue
+    puts "Flip it... smack it... rub it down"
     @queue.count
   end
 
@@ -150,7 +166,6 @@ class EventReporter
     end
     # return attendees
   end
-
 end
 
 if __FILE__ == $0
