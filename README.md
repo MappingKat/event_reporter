@@ -32,3 +32,39 @@ Action, target, message
 
 - dont make class named queue
 - let tests drive code
+
+
+ignore user interface
+
+go straight to process:
+
+load file, default = csv
+ 
+ def load (file = 'attendee_list.csv')
+  file verwrite 
+  then load
+
+make attendee class, attributes and criteria (wraps data nicely)
+  last_name => 
+  attendee.first_name
+  object.instance
+  responds with criteria
+  TEST first_name called allison
+  attendee object
+
+search by first_name <attribute> <criteria>
+  find
+  results number
+  filter.   
+  TEST
+
+rake automates tests--> 
+
+user communication
+  understanding commands --> what does each mean
+  command class... command.new 
+  help queue count
+  
+  help
+  help with options
+  queue count
